@@ -11,7 +11,7 @@ app = FastAPI()
 class ImageRequest(BaseModel):
     image: str
 
-@app.post(f"{type}/upload")
+@app.post(f"/upload")
 async def upload_image(request: ImageRequest):
     decoded = base64.b64decode(request.image)
     image = Image.open(io.BytesIO(decoded))
@@ -19,9 +19,9 @@ async def upload_image(request: ImageRequest):
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     filename = f"{timestamp}.png"
 
-    os.makedirs(f"uploads/{type}", exist_ok=True)
-    image.save(f"uploads/{type}/{filename}")
-    print(f"Image saved as {type}/{filename}")
+    os.makedirs(f"uploads/", exist_ok=True)
+    image.save(f"uploads/{filename}")
+    print(f"Image saved as {filename}")
 
     return {"ok": True}
 

@@ -126,7 +126,7 @@ with gr.Blocks(title="LaMa Inpainting") as demo:
         with gr.Tab("일반 편집"):
             gr.Markdown("이미지를 업로드하고, 브러시로 제거할 영역을 칠하세요.")
 
-            brush_size = gr.Slider(minimum=1, maximum=100, value=30, step=1, label="브러시 크기")
+            brush_size = gr.Slider(minimum=1, maximum=100, value=30, step=1, label="브러시 크기 (이미지 업로드 전에 설정)")
 
             with gr.Row():
                 with gr.Column(scale=1):
@@ -134,8 +134,10 @@ with gr.Blocks(title="LaMa Inpainting") as demo:
                         type="numpy",
                         label="이미지 편집 (브러시로 마스킹)",
                         interactive=True,
+                        brush=gr.Brush(default_size=30, colors=["#FFFFFF"], color_mode="fixed"),
                         eraser=gr.Eraser(default_size=30),
                         height=600,
+                        elem_id="editor_normal",
                     )
                 with gr.Column(scale=1):
                     output = gr.Image(label="결과", type="pil", height=600)
@@ -144,16 +146,18 @@ with gr.Blocks(title="LaMa Inpainting") as demo:
                 btn = gr.Button("🎨 인페인팅 실행", variant="primary", size="lg")
                 save_btn = gr.Button("💾 결과 저장", size="lg")
 
-            def update_brush(size):
+            def create_editor_normal(size):
                 return gr.ImageEditor(
                     type="numpy",
                     label="이미지 편집 (브러시로 마스킹)",
                     interactive=True,
+                    brush=gr.Brush(default_size=size, colors=["#FFFFFF"], color_mode="fixed"),
                     eraser=gr.Eraser(default_size=size),
                     height=600,
+                    elem_id="editor_normal",
                 )
 
-            brush_size.change(fn=update_brush, inputs=brush_size, outputs=editor)
+            brush_size.release(fn=create_editor_normal, inputs=brush_size, outputs=editor)
             btn.click(fn=inpaint, inputs=editor, outputs=output)
             save_btn.click(
                 fn=lambda img: img.save("template.png") if img else None,
@@ -164,14 +168,16 @@ with gr.Blocks(title="LaMa Inpainting") as demo:
         with gr.Tab("🔲 전체화면 편집"):
             gr.Markdown("더 큰 캔버스에서 편하게 마스킹하세요.")
 
-            brush_size_fs = gr.Slider(minimum=1, maximum=150, value=50, step=1, label="브러시 크기")
+            brush_size_fs = gr.Slider(minimum=1, maximum=150, value=50, step=1, label="브러시 크기 (이미지 업로드 전에 설정)")
 
             editor_fs = gr.ImageEditor(
                 type="numpy",
                 label="마스킹 영역을 브러시로 칠하세요",
                 interactive=True,
+                brush=gr.Brush(default_size=50, colors=["#FFFFFF"], color_mode="fixed"),
                 eraser=gr.Eraser(default_size=50),
                 height=800,
+                elem_id="editor_fs",
             )
 
             with gr.Row():
@@ -180,16 +186,18 @@ with gr.Blocks(title="LaMa Inpainting") as demo:
 
             output_fs = gr.Image(label="결과", type="pil", height=600)
 
-            def update_brush_fs(size):
+            def create_editor_fs(size):
                 return gr.ImageEditor(
                     type="numpy",
                     label="마스킹 영역을 브러시로 칠하세요",
                     interactive=True,
+                    brush=gr.Brush(default_size=size, colors=["#FFFFFF"], color_mode="fixed"),
                     eraser=gr.Eraser(default_size=size),
                     height=800,
+                    elem_id="editor_fs",
                 )
 
-            brush_size_fs.change(fn=update_brush_fs, inputs=brush_size_fs, outputs=editor_fs)
+            brush_size_fs.release(fn=create_editor_fs, inputs=brush_size_fs, outputs=editor_fs)
             btn_fs.click(fn=inpaint, inputs=editor_fs, outputs=output_fs)
             save_btn_fs.click(
                 fn=lambda img: img.save("template.png") if img else None,
