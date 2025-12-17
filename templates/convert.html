@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Image Converter</h1>
+<p class="page-desc">Convert images between different formats. Compare file sizes and adjust quality settings for optimal compression.</p>
+<div class="upload-area" id="convertUpload">
+    <input type="file" accept="image/*" id="convertFileInput">
+    <p>Click to upload image</p>
+</div>
+<div id="convertEditor" style="display:none;">
+    <div class="convert-controls">
+        <div class="control-row">
+            <label>Output Format</label>
+            <select id="outputFormat">
+                <option value="image/jpeg">JPEG</option>
+                <option value="image/png">PNG</option>
+                <option value="image/webp" selected>WebP</option>
+                <option value="image/avif">AVIF</option>
+                <option value="image/gif">GIF</option>
+                <option value="image/bmp">BMP</option>
+            </select>
+        </div>
+        <div class="control-row" id="qualityRow">
+            <label>Quality</label>
+            <input type="range" id="quality" min="1" max="100" value="85">
+            <span id="qualityValue">85%</span>
+        </div>
+    </div>
+    <div class="panels">
+        <div class="panel">
+            <div class="panel-label">Original</div>
+            <div class="canvas-container">
+                <canvas id="originalCanvas"></canvas>
+            </div>
+            <div class="file-info" id="originalInfo">-</div>
+        </div>
+        <div class="panel">
+            <div class="panel-label">Converted</div>
+            <div class="canvas-container">
+                <canvas id="convertedCanvas"></canvas>
+            </div>
+            <div class="file-info" id="convertedInfo">-</div>
+        </div>
+    </div>
+    <div class="size-comparison" id="sizeComparison" style="display:none;">
+        <div class="comparison-bar">
+            <div class="bar-original" id="barOriginal"></div>
+            <div class="bar-converted" id="barConverted"></div>
+        </div>
+        <div class="comparison-text" id="comparisonText"></div>
+    </div>
+    <div class="controls">
+        <button class="btn btn-secondary" id="convertReset">Reset</button>
+        <button class="btn btn-primary" id="convertDownload">Download</button>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/convert.js"></script>
+{% endblock %}

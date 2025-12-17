@@ -72,6 +72,15 @@ async def inpaint_page(request: Request):
     })
 
 
+@app.get("/convert")
+async def convert_page(request: Request):
+    return templates.TemplateResponse("convert.html", {
+        "request": request,
+        "title": "Image Converter",
+        "page": "convert"
+    })
+
+
 @app.post("/api/inpaint")
 async def inpaint(
     image: str = Form(...),
