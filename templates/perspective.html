@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Perspective Crop</h1>
+<p class="page-desc">Transform and straighten images by selecting 4 corner points. Perfect for correcting skewed documents, signs, or any rectangular objects photographed at an angle.</p>
+<div class="upload-area" id="perspectiveUpload">
+    <input type="file" accept="image/*" id="perspectiveFileInput">
+    <p>Click to upload image</p>
+</div>
+<div id="perspectiveEditor" style="display:none;">
+    <div class="panels">
+        <div class="panel">
+            <div class="panel-label">Source (Drag 4 points)</div>
+            <div class="canvas-container">
+                <canvas id="perspectiveCanvas"></canvas>
+            </div>
+            <div class="coords-display" id="coordsDisplay"></div>
+        </div>
+        <div class="panel">
+            <div class="panel-label">Preview</div>
+            <div class="canvas-container">
+                <canvas id="perspectivePreview"></canvas>
+            </div>
+            <div class="coords-display">Output Size: <span id="perspectivePreviewSize">-</span></div>
+        </div>
+    </div>
+    <div class="controls">
+        <button class="btn btn-secondary" id="perspectiveReset">Reset Points</button>
+        <button class="btn btn-primary" id="perspectiveDownload">Download</button>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/perspective.js"></script>
+{% endblock %}

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <nav>
+        <a href="/" class="logo">Image Tools</a>
+        <div class="nav-links">
+            <a href="/perspective" {% if page == 'perspective' %}class="active"{% endif %}>Perspective Crop</a>
+            <a href="/inpaint" {% if page == 'inpaint' %}class="active"{% endif %}>Inpaint</a>
+        </div>
+    </nav>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    <div class="loading hidden" id="loading">
+        <div class="spinner"></div>
+    </div>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="home-container">
+    <h1>Image Tools</h1>
+    <p class="page-desc">Free online image editing tools powered by AI</p>
+    <div class="tool-grid">
+        <a href="/perspective" class="tool-card">
+            <div class="tool-icon">⛶</div>
+            <div class="tool-name">Perspective Crop</div>
+            <div class="tool-desc">Transform and straighten skewed images by selecting 4 corner points</div>
+        </a>
+        <a href="/inpaint" class="tool-card">
+            <div class="tool-icon">✨</div>
+            <div class="tool-name">Inpaint</div>
+            <div class="tool-desc">Remove unwanted objects from images using AI-powered inpainting</div>
+        </a>
+    </div>
+</div>
+{% endblock %}
